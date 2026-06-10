@@ -302,7 +302,10 @@ class NSFnet2D:
         返回：
           minimize 的优化结果对象
         """
-        from mindspore.scipy.optimize import minimize
+        try:
+            from mindspore.scipy.optimize import minimize
+        except ImportError:
+            from scipy.optimize import minimize
 
         # 获取所有可训练参数及其形状
         params = list(self.net.trainable_params())
@@ -536,7 +539,10 @@ class NSFnet2DUnsteady:
 
     def lbfgs_train(self, maxiter=50000):
         """L-BFGS 精调（与 2D 定常版本逻辑一致）。"""
-        from mindspore.scipy.optimize import minimize
+        try:
+            from mindspore.scipy.optimize import minimize
+        except ImportError:
+            from scipy.optimize import minimize
         params = list(self.net.trainable_params())
         shapes = [p.shape for p in params]
         sizes  = [int(np.prod(s)) for s in shapes]
@@ -754,7 +760,10 @@ class NSFnet3DUnsteady:
 
     def lbfgs_train(self, maxiter=50000):
         """L-BFGS 精调（与其他版本逻辑一致）。"""
-        from mindspore.scipy.optimize import minimize
+        try:
+            from mindspore.scipy.optimize import minimize
+        except ImportError:
+            from scipy.optimize import minimize
         params = list(self.net.trainable_params())
         shapes = [p.shape for p in params]
         sizes  = [int(np.prod(s)) for s in shapes]
